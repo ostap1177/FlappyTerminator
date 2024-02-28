@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemySpawner : ObjectPool
@@ -7,29 +8,45 @@ public class EnemySpawner : ObjectPool
     [SerializeField] private float _maxSpawnPositionY;
     [SerializeField] private float _minSpawnPositionY;
 
-    private float _elapsedTime = 0;
+    private WaitForSeconds _waitForSeconds;
+    private Coroutine _spawning;
 
-    private void Start()
+    private void Awake()
     {
         Initialaze(_enemyPrefab);
+        _waitForSeconds = new WaitForSeconds(_secondBetweenSpawn);
+
+        Spawn();
     }
 
-    private void Update()
+    private void Spawn()
     {
-        _elapsedTime += Time.deltaTime;
-
-        if (_elapsedTime > _secondBetweenSpawn)
+        if (_spawning != null)
         {
-            if (TryGetObject(out GameObject pipe))
-            {
-                _elapsedTime = 0;
+            StopCoroutine(_spawning);
+        }
 
+        _spawning = StartCoroutine(DelaySpawn());
+    }
+
+    private IEnumerator DelaySpawn()
+    {
+        while (true)
+        {
+            yield return _waitForSeconds;
+
+            if (TryGetObject(out GameObject enemy) == true)
+            {
                 float spawnPositionY = Random.Range(_minSpawnPositionY, _maxSpawnPositionY);
                 Vector3 spawnPoint = new Vector3(transform.position.x, spawnPositionY, transform.position.z);
-                pipe.SetActive(true);
-                pipe.transform.position = spawnPoint;
+                enemy.SetActive(true);
+                enemy.transform.position = spawnPoint;
 
                 DisableObjectAbroadScreen();
+            }
+            else
+            {
+                Initialaze(_enemyPrefab);
             }
         }
     }

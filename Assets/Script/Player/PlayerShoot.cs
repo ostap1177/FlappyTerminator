@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShooting : Shooting
+public class PlayerShoot : Shoot
 {
     [SerializeField] private KeyCode _shootKey;
 
@@ -10,7 +8,7 @@ public class PlayerShooting : Shooting
     {
         if (Input.GetKeyDown(_shootKey) == true)
         {
-            Shoot();
+            Shot();
         }
     }
 }

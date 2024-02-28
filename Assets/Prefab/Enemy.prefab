@@ -186,9 +186,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52f9e75439a704e37a95c9c40ae5ab47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bullet: {fileID: 8954106127855378183, guid: e5950bb726c3c46de8cf349ed803425c, type: 3}
+  _bulletPrefab: {fileID: 8954106127855378183, guid: e5950bb726c3c46de8cf349ed803425c, type: 3}
   _shootPoint: {fileID: 633192782618051745}
   _directionShoot: {x: -1, y: 0, z: 0}
   _speedBullet: 15
-  _delayBulletDestroed: 2
+  _delayBulletDestroed: 1
   _secondBetweenShot: 1
